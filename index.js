@@ -1,4 +1,3 @@
-/* jshint node: true */
 'use strict';
 
 var Filter = require('broccoli-filter');
@@ -28,7 +27,7 @@ TemplateCompiler.prototype.processString = function(string, relativePath) {
 };
 
 module.exports = {
-  name: 'ember-cli-markdown-compiler',
+  name: require('./package').name,
 
   isDevelopingAddon: function() {
     return true;
