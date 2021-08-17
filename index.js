@@ -4,7 +4,9 @@ var Filter = require('broccoli-filter');
 var marked = require('marked');
 marked.setOptions({
   gfm: true,
-  sanitize: true
+  highlight(code) {
+    return require('highlight.js').highlightAuto(code).value;
+  }
 });
 
 function TemplateCompiler(inputNode, options) {
@@ -23,7 +25,9 @@ TemplateCompiler.prototype.extensions = ['md'];
 TemplateCompiler.prototype.targetExtension = 'hbs';
 
 TemplateCompiler.prototype.processString = function(string) {
-  return this.compile(string).replace(/{/g, '&#x7B;');
+  return this.compile(string).replace(/&quot;/g, '"').replace(/<pre>[\s\S]*<\/pre>/g, function(match) {
+    return match.replace(/{/g, '&#x7B;');
+  });
 };
 
 module.exports = {
