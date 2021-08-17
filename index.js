@@ -22,7 +22,7 @@ TemplateCompiler.prototype.constructor = TemplateCompiler;
 TemplateCompiler.prototype.extensions = ['md'];
 TemplateCompiler.prototype.targetExtension = 'hbs';
 
-TemplateCompiler.prototype.processString = function(string, relativePath) {
+TemplateCompiler.prototype.processString = function(string) {
   return this.compile(string).replace(/{/g, '&#x7B;');
 };
 
@@ -33,11 +33,11 @@ module.exports = {
     return true;
   },
 
-  setupPreprocessorRegistry: function(type, registry) {
+  setupPreprocessorRegistry(type, registry) {
     registry.add('template', {
       name: 'ember-cli-markdown-compiler',
       ext: ['md'],
-      toTree: function(tree) {
+      toTree(tree) {
         return TemplateCompiler(tree);
       }
     });
@@ -47,7 +47,7 @@ module.exports = {
     }
   },
 
-  included: function(app) {
+  included(app) {
     this._super.included.apply(this, arguments);
 
     this.setupPreprocessorRegistry('parent', app.registry);
