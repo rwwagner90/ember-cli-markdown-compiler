@@ -6,7 +6,7 @@ marked.setOptions({
   gfm: true,
   highlight(code) {
     return require('highlight.js').highlightAuto(code).value;
-  }
+  },
 });
 
 function TemplateCompiler(inputNode, options) {
@@ -24,16 +24,18 @@ TemplateCompiler.prototype.constructor = TemplateCompiler;
 TemplateCompiler.prototype.extensions = ['md'];
 TemplateCompiler.prototype.targetExtension = 'hbs';
 
-TemplateCompiler.prototype.processString = function(string) {
-  return this.compile(string).replace(/&quot;/g, '"').replace(/<pre>[\s\S]*<\/pre>/g, function(match) {
-    return match.replace(/{/g, '&#x7B;');
-  });
+TemplateCompiler.prototype.processString = function (string) {
+  return this.compile(string)
+    .replace(/&quot;/g, '"')
+    .replace(/<pre>[\s\S]*<\/pre>/g, function (match) {
+      return match.replace(/{/g, '&#x7B;');
+    });
 };
 
 module.exports = {
   name: require('./package').name,
 
-  isDevelopingAddon: function() {
+  isDevelopingAddon: function () {
     return true;
   },
 
@@ -43,7 +45,7 @@ module.exports = {
       ext: ['md'],
       toTree(tree) {
         return TemplateCompiler(tree);
-      }
+      },
     });
 
     if (type === 'parent') {
@@ -55,6 +57,5 @@ module.exports = {
     this._super.included.apply(this, arguments);
 
     this.setupPreprocessorRegistry('parent', app.registry);
-  }
-
+  },
 };
