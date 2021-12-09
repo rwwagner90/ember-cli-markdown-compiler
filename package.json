@@ -76,5 +76,9 @@
     "before": [
       "ember-cli-htmlbars"
     ]
+  },
+  "volta": {
+    "node": "14.17.6",
+    "yarn": "1.22.10"
   }
 }
